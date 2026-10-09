@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>环形路线生成器 · 跑步 / 骑行</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="map"></div>
+
+<div id="panel">
+  <header class="panel-head">
+    <h1>环形路线生成器</h1>
+    <p class="panel-sub">选出发点 → 输入距离 → 生成回到起点的环线</p>
+  </header>
+
+  <div class="field">
+    <label class="field-label">运动类型</label>
+    <div class="segmented" id="modeSwitch">
+      <button type="button" class="seg is-active" data-mode="run">跑步</button>
+      <button type="button" class="seg" data-mode="ride">骑行</button>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-head">
+      <label class="field-label" for="distRange">目标距离</label>
+      <span class="dist-input">
+        <input type="number" id="distNumber" value="10" min="3" max="42" step="1" inputmode="decimal">
+        <span class="unit">km</span>
+      </span>
+    </div>
+    <input type="range" id="distRange" min="3" max="42" step="1" value="10">
+    <div class="range-hint"><span id="distMin">3 km</span><span id="distMax">42 km</span></div>
+  </div>
+
+  <div class="field">
+    <div class="field-head">
+      <label class="field-label">出发点（也是终点）</label>
+      <span class="btn-group">
+        <button type="button" id="locateBtn" class="mini">定位</button>
+        <button type="button" id="clearBtn" class="mini">清除</button>
+      </span>
+    </div>
+    <div id="startLabel" class="start-label">在地图上点击选择出发点</div>
+  </div>
+
+  <button type="button" id="generateBtn" class="primary">生成路线</button>
+
+  <div id="status" class="status" hidden>
+    <span class="spinner"></span><span id="statusText">正在规划…</span>
+  </div>
+
+  <div id="cards" class="cards"></div>
+
+  <footer class="panel-foot">
+    距离偏差控制在 ±10% 以内 · 受高德接口限速（约 3 次/秒），每次生成通常需 5~15 秒
+  </footer>
+</div>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="config.js"></script>
+<script src="js/amap.js"></script>
+<script src="js/loopgen.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
